@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Features · On Duty Framework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+  <header class="site-header" data-docs-header></header>
+  <main class="wrap">
+    <h1 class="page-title">Features</h1>
+    <p class="page-lead">What ships in On Duty Framework today (v0.29.0).</p>
+
+    <section class="section">
+      <h2>Duty</h2>
+      <ul>
+        <li>Unified F4 menu — go on/off duty with unique 3-digit callsigns</li>
+        <li>Duty ped swap or freemode with holster profiles</li>
+        <li>Unit specialty, display name, agency</li>
+        <li>Movable / scalable always-on duty HUD</li>
+        <li>Persistent shift stats and activity log</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>CAD / Dispatch</h2>
+      <ul>
+        <li>Server-authoritative weighted call generation with distance bias and location history</li>
+        <li>Alert banner, quick-accept, hide, multi-unit Join Call</li>
+        <li>En Route / On Scene, CAD notes, call outcomes</li>
+        <li>Mid-response stand-downs on selected callouts</li>
+        <li>Panic clears unassigned calls; pursuits can hold/clear the board the same way</li>
+        <li>Dispatch radio audio with per-player volume</li>
+      </ul>
+      <h3>Built-in callouts</h3>
+      <p>Suspicious Person, Residential / Commercial Burglar Alarm, Medical Emergency, Shots Fired — plus custom JSON examples (Traffic Complaint, Minor Crash).</p>
+    </section>
+
+    <section class="section">
+      <h2>Traffic stops</h2>
+      <ul>
+        <li>Mark → emergency equipment → AI pull-over</li>
+        <li>Step-out, ID, reasons, passengers, search / tow</li>
+        <li>Flee and close-range reaction outcomes</li>
+        <li>Hold Left Shift to cancel a mark or fully conclude an active stop</li>
+        <li>Call in a fleeing vehicle as a CAD pursuit (hold X / F5)</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Pursuits</h2>
+      <ul>
+        <li>Foot and vehicle pursuits; any unit can join</li>
+        <li>Aggressive flee AI, PIT, tackle, taser surrender, aim-to-order surrender</li>
+        <li><strong>Search mode:</strong> last-known area on the map (no live pin); UTL timeout if not reacquired</li>
+        <li>On-screen pursuit action hints</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Field interactions</h2>
+      <ul>
+        <li>ID, cuff/uncuff, frisk, escort, put in / take out of vehicle</li>
+        <li>Citations prepared in MDT, issued in the field</li>
+        <li>First aid / injured patients</li>
+        <li>Subject speech above the ped’s head</li>
+        <li>Role-scoped callout questions (suspect / victim / complainant / witness)</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Fleet &amp; radio</h2>
+      <ul>
+        <li>Department garage markers and trunk equipment (medic bag, etc.)</li>
+        <li>Handheld radio: backup, plate/person run, mechanic, clear scene, pursuits</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Admin tools</h2>
+      <ul>
+        <li>Passcode-gated Settings panels</li>
+        <li>Live dispatch tuning</li>
+        <li>Waypoint Editor (capture, teleport, GPS, tag to callouts)</li>
+        <li>Callout Builder (author / test / save custom scenes)</li>
+      </ul>
+    </section>
+  </main>
+  <footer class="site-footer" data-docs-footer></footer>
+  <script src="assets/docs.js"></script>
+</body>
+</html>

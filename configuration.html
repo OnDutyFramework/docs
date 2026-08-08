@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configuration · On Duty Framework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+  <header class="site-header" data-docs-header></header>
+  <main class="wrap">
+    <h1 class="page-title">Configuration</h1>
+    <p class="page-lead">Primary knobs live in <code>shared/config.lua</code>. Live dispatch values can also be tuned in MDT → Settings (admin).</p>
+
+    <section class="section">
+      <h2>Brand</h2>
+      <p>Product chrome (MDT header, duty HUD tag, notification senders). Separate from RP agencies.</p>
+      <pre><code>Config.Brand = {
+    productName = 'On Duty Framework',
+    hudTag = 'ON DUTY',
+    mdtProduct = 'ON DUTY FRAMEWORK',
+    mdtSubtitle = 'MOBILE DATA TERMINAL',
+    signOnKicker = 'ON DUTY · SECURE SIGN-ON',
+    notifySender = 'On Duty',
+    notifyDispatch = 'On Duty Dispatch',
+    notifyMedical = 'On Duty Medical',
+}</code></pre>
+    </section>
+
+    <section class="section">
+      <h2>Admin</h2>
+      <pre><code>Config.Admin = {
+    passcode = 'CHANGE_ME', -- MDT → Settings unlock
+}</code></pre>
+    </section>
+
+    <section class="section">
+      <h2>Key areas</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Table</th><th>Controls</th></tr></thead>
+          <tbody>
+            <tr><td><code>Config.Duty</code></td><td>Ped model, spawn point, weapons</td></tr>
+            <tr><td><code>Config.Dispatch</code></td><td>Intervals, distances, caps, panic/pursuit suppress</td></tr>
+            <tr><td><code>Config.Pursuit</code></td><td>Flee chances, search mode, PIT/disable, call-in</td></tr>
+            <tr><td><code>Config.TrafficStop</code></td><td>Mark range, pull-over behavior</td></tr>
+            <tr><td><code>Config.Vehicles</code></td><td>Department fleet models</td></tr>
+            <tr><td><code>Config.PoliceStations</code></td><td>Station locations / transport</td></tr>
+            <tr><td><code>Config.Agencies</code></td><td>RP agency labels (default BCSO)</td></tr>
+            <tr><td><code>Config.Audio</code></td><td>Server-wide radio mute / priority tone</td></tr>
+            <tr><td><code>Config.Keybinds</code></td><td>Default key names for RegisterKeyMapping</td></tr>
+            <tr><td><code>Config.Debug</code></td><td>Force pursuit, auto-duty, visualizers</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Easter egg</h2>
+      <pre><code>Config.EasterEgg = {
+    file = 'BigHero.wav',
+    joinTriggers = {
+        -- ['license:yourhex'] = 'BigHero.wav',
+    },
+}</code></pre>
+    </section>
+  </main>
+  <footer class="site-footer" data-docs-footer></footer>
+  <script src="assets/docs.js"></script>
+</body>
+</html>

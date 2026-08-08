@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Callouts · On Duty Framework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+  <header class="site-header" data-docs-header></header>
+  <main class="wrap">
+    <h1 class="page-title">Callouts</h1>
+    <p class="page-lead">Built-in Lua callouts plus the in-game Callout Builder for custom JSON scenes.</p>
+
+    <section class="section">
+      <h2>Built-in (Lua)</h2>
+      <p>Files under <code>shared/callouts/</code> append to <code>Config.Callouts</code>. Edit weight, descriptions, scene models, and suspect states there.</p>
+      <ul>
+        <li><code>suspicious_person</code></li>
+        <li><code>residential_burglar_alarm</code> / <code>commercial_burglar_alarm</code></li>
+        <li><code>medical_emergency</code></li>
+        <li><code>shots_fired</code></li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>Callout Builder</h2>
+      <p>MDT → Settings (admin unlock) → <strong>Callout Builder</strong>.</p>
+      <ul>
+        <li>List / enable / weight / priority / category</li>
+        <li>Dispatch briefing (shown on accept + active call HUD)</li>
+        <li>Actors: suspect, victim, complainant, witness — models, counts, questions, states</li>
+        <li>Vehicles: parked, idling, wrecked, driven_by_actor (+ link actor role)</li>
+        <li><strong>Test Spawn</strong> forces the callout near you</li>
+        <li>Saved to <code>custom_callouts.json</code> and hot-merged into the live pool</li>
+      </ul>
+      <div class="callout">Shipped examples: <strong>traffic_complaint</strong> and <strong>minor_crash</strong>.</div>
+    </section>
+
+    <section class="section">
+      <h2>Custom schema (v1)</h2>
+      <pre><code>{
+  "id": "traffic_complaint",
+  "title": "Traffic Complaint",
+  "description": "...",
+  "dispatchBriefing": "Complainant on scene...",
+  "category": "traffic",
+  "priority": 2,
+  "weight": 25,
+  "enabled": true,
+  "scene": {
+    "type": "actors",
+    "actors": [
+      {
+        "role": "complainant",
+        "models": ["a_m_y_hipster_01"],
+        "count": 1,
+        "questions": [
+          { "prompt": "What happened?", "response": "..." }
+        ]
+      },
+      {
+        "role": "suspect",
+        "models": ["a_m_y_stwhi_01"],
+        "states": [
+          { "id": "cooperative", "label": "Cooperative", "weight": 3 }
+        ],
+        "questions": [
+          { "prompt": "Do you know why I stopped you?", "response": "..." }
+        ]
+      }
+    ],
+    "vehicles": [
+      {
+        "role": "subject",
+        "models": ["sultan"],
+        "condition": "driven_by_actor",
+        "linkActorRole": "suspect"
+      }
+    ]
+  }
+}</code></pre>
+    </section>
+
+    <section class="section">
+      <h2>Waypoints</h2>
+      <p>Tag saved locations to categories or specific callout IDs in the Waypoint Editor. Once any waypoint is tagged for a call, that call uses the dedicated pool instead of the shared one. Capture with Capture My Location or <code>/fivemfr_coords</code>.</p>
+    </section>
+  </main>
+  <footer class="site-footer" data-docs-footer></footer>
+  <script src="assets/docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Controls · On Duty Framework</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+  <header class="site-header" data-docs-header></header>
+  <main class="wrap">
+    <h1 class="page-title">Controls</h1>
+    <p class="page-lead">Defaults via <code>RegisterKeyMapping</code> — players can rebind under FiveM Settings → Key Bindings → FiveM Mods.</p>
+
+    <section class="section">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Action</th><th>Default</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Open MDT</td><td><kbd>F4</kbd></td><td>Duty gate, CAD, records, citations, stats, settings. Tablet prop on foot.</td></tr>
+            <tr><td>Interact / garage</td><td><kbd>E</kbd></td><td>Peds, vehicles, trunk equipment, fleet markers. On duty + on foot.</td></tr>
+            <tr><td>Call in pursuit</td><td><kbd>X</kbd> hold</td><td>Foot flee or pending traffic-stop vehicle flee. Also F5 radio.</td></tr>
+            <tr><td>Order surrender</td><td><kbd>E</kbd> hold while aiming</td><td>Foot or vehicle. Interact menu does not open while aiming.</td></tr>
+            <tr><td>Hide call banner</td><td><kbd>N</kbd></td><td>Unaccepted calls only. Panic exempt.</td></tr>
+            <tr><td>Quick-respond</td><td><kbd>Y</kbd></td><td>Accept latest pending alert.</td></tr>
+            <tr><td>Complete call</td><td><kbd>G</kbd></td><td>Reminder to pick an outcome in MDT → Calls.</td></tr>
+            <tr><td>Panic / Officer Assist</td><td><kbd>B</kbd></td><td>Emergency call at your position; nearby presses merge.</td></tr>
+            <tr><td>Radio</td><td><kbd>F5</kbd></td><td>Backup, plate/person run, mechanic, clear scene, pursuit actions.</td></tr>
+            <tr><td>Busy toggle</td><td><kbd>F7</kbd></td><td>Stop/resume normal dispatch without going off duty.</td></tr>
+            <tr><td>Traffic stop</td><td><kbd>Left Shift</kbd></td><td>Tap mark · lights/siren start · hold ~5s cancel/conclude.</td></tr>
+            <tr><td>Tackle</td><td><kbd>T</kbd></td><td>Nearby fleeing call-scene suspect on foot.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Admin commands</h2>
+      <ul>
+        <li><code>/fivemfr_coords [label]</code> — save current position as a dispatch waypoint (admin unlock required)</li>
+        <li><code>/fliptrailer</code> — flip nearest trailer for scene tests (admin unlock required)</li>
+      </ul>
+    </section>
+  </main>
+  <footer class="site-footer" data-docs-footer></footer>
+  <script src="assets/docs.js"></script>
+</body>
+</html>
