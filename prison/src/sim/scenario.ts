@@ -84,13 +84,15 @@ export function createStartingPrison(): World {
   }
 
   // --- canteen, south-west --------------------------------------------------
-  wallRect(12, 25, 26, 35);
-  floorRect(13, 26, 25, 34, FLOOR.Polished);
+  wallRect(12, 25, 25, 34);
+  floorRect(13, 26, 24, 33, FLOOR.Polished);
   setDoor(16, 25);
-  setDoor(22, 25);
+  setDoor(21, 25);
   for (const ty of [28, 31]) {
-    for (const tx of [15, 18, 21, 24]) place('table', tx, ty);
+    for (const tx of [15, 18, 21, 23] as const) place('table', tx, ty);
   }
+  // Serving line along the back wall.
+  for (const bx of [14, 15, 16]) place('bench', bx, 33);
 
   // --- common room, south-centre -------------------------------------------
   wallRect(27, 25, 37, 33);
@@ -108,9 +110,18 @@ export function createStartingPrison(): World {
   }
 
   // --- yard, east -----------------------------------------------------------
-  floorRect(47, 23, 47, 23, FLOOR.Concrete);
+  floorRect(47, 22, 47, 24, FLOOR.Concrete);
   floorRect(48, 12, 60, 34, FLOOR.Yard);
-  for (const by of [16, 20]) place('bench', 50, by);
+  for (const [bx, by] of [
+    [50, 16],
+    [50, 20],
+    [56, 15],
+    [56, 19],
+    [52, 28],
+    [57, 29],
+  ] as const) {
+    place('bench', bx, by);
+  }
 
   world.markRoomsDirty();
   world.rebuildRooms();

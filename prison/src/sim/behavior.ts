@@ -2,7 +2,7 @@ import { OBJECTS } from './catalog';
 import { SECONDS_PER_HOUR } from './clock';
 import { bedOf } from './housing';
 import { approachTiles, followPath, goTo, randomTileIn } from './locomotion';
-import { CRITICAL, NEED_LABELS, STRAINED, criticalNeeds, lowestNeed, restoreNeed } from './needs';
+import { CRITICAL, NEED_LABELS, STRAINED, criticalNeeds, restoreNeed } from './needs';
 import type { ActivityKind, Agent, NeedKind, ObjectKind, PlacedObject, RegimeBlock } from './types';
 import type { World } from './world';
 
@@ -163,7 +163,9 @@ function chooseIntent(world: World, agent: Agent): Intent {
     case 'yard':
       return { kind: 'yard', reason: 'Yard time', urgent: false };
     case 'free': {
-      const low = lowestNeed(agent.needs);
+      // Nobody goes back to bed in the afternoon; only a critical sleep need,
+      // handled above, gets an inmate out of association and into a cell.
+      const low = lowestNeedExcludingSleep(agent.needs);
       if (low.value < STRAINED) {
         return {
           kind: INTENT_FOR_NEED[low.kind],
@@ -174,6 +176,19 @@ function chooseIntent(world: World, agent: Agent): Intent {
       return { kind: 'recreation', reason: 'Association time', urgent: false };
     }
   }
+}
+
+function lowestNeedExcludingSleep(needs: Agent['needs']): { kind: NeedKind; value: number } {
+  let kind: NeedKind = 'hunger';
+  let value = Infinity;
+  for (const candidate of NEED_PRIORITY) {
+    if (candidate === 'sleep') continue;
+    if (needs[candidate] < value) {
+      value = needs[candidate];
+      kind = candidate;
+    }
+  }
+  return { kind, value };
 }
 
 function resolveIntent(world: World, agent: Agent, intent: Intent): boolean {

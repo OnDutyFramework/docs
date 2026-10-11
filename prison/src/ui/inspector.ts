@@ -278,11 +278,14 @@ export class Inspector {
           }
         </div>
 
-        <div class="section">
+        ${
+          room.kind !== 'cell' && room.kind !== 'holding' && occupants.length === 0
+            ? ''
+            : `<div class="section">
           <span class="micro">Assigned inmates</span>
           ${
             occupants.length === 0
-              ? '<p class="empty">Nobody is housed here.</p>'
+              ? '<p class="empty">Nobody is housed here yet.</p>'
               : `<div class="roster">${occupants
                   .map(
                     (agent) => `
@@ -296,7 +299,8 @@ export class Inspector {
                   )
                   .join('')}</div>`
           }
-        </div>
+        </div>`
+        }
       </div>`;
   }
 }
