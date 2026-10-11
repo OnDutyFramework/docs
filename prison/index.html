@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Time Served — Prison Management</title>
+    <meta name="description" content="A browser-based prison management simulation about what a sentence is for." />
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="field"></canvas>
+
+      <header class="topbar">
+        <div class="panel brand">
+          <strong>Time Served</strong>
+          <span>Rockdale Correctional Facility</span>
+        </div>
+
+        <div class="panel clockbox">
+          <div class="day">
+            <span class="micro" id="day-label">Day 1</span>
+            <span class="time" id="clock-time">06:30</span>
+          </div>
+          <div class="divider"></div>
+          <div class="regime">
+            <span class="micro">Regime</span>
+            <span class="regime-label" id="regime-label">—</span>
+            <div class="regime-track"><div class="regime-fill" id="regime-fill"></div></div>
+          </div>
+          <div class="divider"></div>
+          <div class="speeds" id="speeds"></div>
+        </div>
+
+        <div class="panel stats" id="stats"></div>
+      </header>
+
+      <div class="rail">
+        <div class="panel feed" id="feed"></div>
+        <div class="panel legend" id="legend"></div>
+      </div>
+
+      <aside class="panel inspector" id="inspector" hidden></aside>
+
+      <div class="hint" id="hint"></div>
+
+      <footer class="panel toolbar" id="toolbar"></footer>
+
+      <div class="panel ops" id="ops"></div>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
