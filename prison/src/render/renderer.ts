@@ -1,7 +1,7 @@
 import { clamp01 } from '../core/math';
 import type { BuildPlan, Rect } from '../sim/build';
 import { ROOM_META } from '../sim/rooms';
-import { FLOOR, WALL, type Agent, type ObjectKind, type PlacedObject, type Room } from '../sim/types';
+import { FLOOR, WALL, type Agent, type PlacedObject, type Room } from '../sim/types';
 import type { World } from '../sim/world';
 import { Camera } from './camera';
 import {
@@ -367,6 +367,7 @@ export class Renderer {
     const { ctx } = this;
     const zoom = this.camera.zoom;
     const bodyRadius = Math.max(2.5, zoom * 0.3);
+    this.tagBoxes.length = 0;
 
     for (const agent of this.world.agents.values()) {
       const sx = this.camera.worldToScreenX(agent.x);
@@ -442,24 +443,50 @@ export class Renderer {
       }
 
       if (prisoner && (zoom >= NAME_ZOOM || selected)) {
-        this.drawNameTag(agent, sx, sy - bodyRadius * 1.7);
+        this.drawNameTag(agent, sx, sy - bodyRadius * 1.7, selected);
       }
     }
   }
 
   private selectedAgentId: number | null = null;
+  /** Name tags already placed this frame, used to suppress collisions. */
+  private tagBoxes: Array<[number, number, number, number]> = [];
 
-  private drawNameTag(agent: Agent, sx: number, sy: number): void {
+  private drawNameTag(agent: Agent, sx: number, sy: number, force: boolean): void {
     const { ctx } = this;
-    const label = agent.profile.fullName.split(' ').slice(-1)[0].toUpperCase();
+    const parts = agent.profile.fullName.split(' ');
+    const label = `${parts[0][0]}. ${parts[parts.length - 1]}`.toUpperCase();
     ctx.font = `600 10px ${FONT_UI}`;
+    const w = ctx.measureText(label).width + 11;
+    const box: [number, number, number, number] = [sx - w / 2, sy - 8, w, 15];
+
+    // A crowded cell block is unreadable if every tag is drawn; drop the ones
+    // that would overlap a tag already placed, unless this agent is selected.
+    if (!force) {
+      for (const other of this.tagBoxes) {
+        if (
+          box[0] < other[0] + other[2] &&
+          box[0] + box[2] > other[0] &&
+          box[1] < other[1] + other[3] &&
+          box[1] + box[3] > other[1]
+        ) {
+          return;
+        }
+      }
+    }
+    this.tagBoxes.push(box);
+
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    const w = ctx.measureText(label).width + 10;
-    ctx.fillStyle = 'rgba(10, 14, 20, 0.78)';
-    roundRect(ctx, sx - w / 2, sy - 8, w, 15, 4);
+    ctx.fillStyle = force ? 'rgba(13, 32, 38, 0.92)' : 'rgba(10, 14, 20, 0.82)';
+    roundRect(ctx, box[0], box[1], box[2], box[3], 4);
     ctx.fill();
-    ctx.fillStyle = C.text;
+    if (force) {
+      ctx.strokeStyle = C.accent;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    ctx.fillStyle = force ? C.accent : C.text;
     ctx.fillText(label, sx, sy);
   }
 
@@ -570,8 +597,17 @@ export class Renderer {
     const { map } = this.world;
 
     for (const op of preview.plan.ops) {
-      const [rx, ry, rw, rh] = this.tileRect(map.tileX(op.index), map.tileY(op.index));
-      ctx.fillStyle = previewColor(op.type, 'kind' in op ? op.kind : undefined);
+      const x = map.tileX(op.index);
+      const y = map.tileY(op.index);
+      if (op.type === 'object') {
+        // Draw the real furniture sprite so the ghost is recognisable.
+        ctx.globalAlpha = 0.62;
+        this.drawObject({ id: -1, kind: op.kind, x, y, userId: null, ownerId: null, roomId: -1 });
+        ctx.globalAlpha = 1;
+        continue;
+      }
+      const [rx, ry, rw, rh] = this.tileRect(x, y);
+      ctx.fillStyle = previewColor(op.type);
       ctx.fillRect(rx, ry, rw, rh);
     }
     ctx.fillStyle = 'rgba(242, 86, 106, 0.4)';
@@ -674,18 +710,16 @@ function withAlpha(hex: string, alpha: number): string {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-function previewColor(type: string, kind?: ObjectKind): string {
+function previewColor(type: string): string {
   switch (type) {
     case 'wall':
-      return 'rgba(221, 229, 239, 0.55)';
+      return 'rgba(214, 223, 235, 0.68)';
     case 'door':
-      return 'rgba(245, 185, 66, 0.6)';
+      return 'rgba(245, 185, 66, 0.72)';
     case 'floor':
-      return 'rgba(84, 214, 232, 0.28)';
+      return 'rgba(84, 214, 232, 0.17)';
     case 'demolish':
       return 'rgba(242, 86, 106, 0.45)';
-    case 'object':
-      return kind ? withAlpha(OBJECT_COLORS[kind].accent, 0.6) : 'rgba(84, 214, 232, 0.5)';
     default:
       return 'rgba(84, 214, 232, 0.3)';
   }
